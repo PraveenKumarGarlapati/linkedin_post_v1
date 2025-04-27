@@ -192,3 +192,71 @@ def post_to_linkedin(post_content):
     return response.status_code == 201
 
 post_to_linkedin(final_post_simple_text)
+
+
+
+# import pandas as pd
+# import numpy as np
+# from openpyxl import load_workbook
+# from openpyxl.utils.dataframe import dataframe_to_rows
+
+# def process_excel(input_file, output_file=None):
+#     """
+#     Process Excel file by dividing all numeric values by 100000 and
+#     adding ' (in Lakhs)' suffix to columns with numeric values.
+    
+#     Args:
+#         input_file: Path to input Excel file
+#         output_file: Path to output Excel file, if None, will use 'processed_' + input_file
+    
+#     Returns:
+#         Path to the output file
+#     """
+#     if output_file is None:
+#         output_file = f"processed_{input_file}"
+    
+#     # Load the Excel file
+#     xls = pd.ExcelFile(input_file)
+#     sheet_names = xls.sheet_names
+    
+#     # Create a writer object
+#     writer = pd.ExcelWriter(output_file, engine='openpyxl')
+    
+#     # Process each sheet
+#     for sheet_name in sheet_names:
+#         # Read the sheet
+#         df = pd.read_excel(input_file, sheet_name=sheet_name)
+        
+#         # Keep track of which columns have numeric values
+#         numeric_columns = []
+        
+#         # Process each column
+#         for col in df.columns:
+#             # Check if column has numeric values
+#             numeric_values = df[col].apply(lambda x: isinstance(x, (int, float)) and not np.isnan(x))
+#             if numeric_values.any():
+#                 # Only convert numeric values in the column
+#                 df[col] = df[col].apply(lambda x: x/100000 if isinstance(x, (int, float)) and not np.isnan(x) else x)
+#                 numeric_columns.append(col)
+        
+#         # Rename columns by adding suffix
+#         column_mapping = {}
+#         for col in numeric_columns:
+#             if not ' (in Lakhs)' in col:  # Avoid adding suffix twice
+#                 column_mapping[col] = f"{col} (in Lakhs)"
+        
+#         # Apply column renaming
+#         df.rename(columns=column_mapping, inplace=True)
+        
+#         # Write to Excel
+#         df.to_excel(writer, sheet_name=sheet_name, index=False)
+    
+#     # Save the Excel file
+#     writer.close()
+    
+#     return output_file
+
+# if __name__ == "__main__":
+#     # Test with the provided file
+#     output_file = process_excel('annual_report.xlsx')
+#     print(f"Processed file saved as: {output_file}") 
